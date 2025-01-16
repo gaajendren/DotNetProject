@@ -1,0 +1,68 @@
+﻿@model DotNetProject.Models.FollowViewModel
+
+@{
+    ViewData["Title"] = "Follow Friend";
+}
+
+<h2 class="text-center my-4">Search and Follow Friend</h2>
+
+<!-- Search Form with Text Input -->
+<div class="container">
+    <a href="@Url.Action("FollowedUsers", "Follow")" class="btn btn-info mt-3 mb-3 w-auto m-auto">View Followed Friend</a>
+    <form method="get" action="@Url.Action("FollowUser", "Follow")" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="searchTerm" class="form-control" placeholder="Enter Friend name to search" value="@Model.SearchTerm" />
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+</div>
+
+@if (Model.Users != null && Model.Users.Any())
+{
+    <div class="container">
+        <div class="list-group">
+            
+            @* This is for search *@
+            @foreach (var user in Model.Users)
+            {
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>@user.Name</span>
+
+                    @* Check if the current user is already following this user *@
+                    @if (Model.FollowedUsers.Contains(user.Id))
+                    {
+                        @* If the current user is following, show Unfollow button *@
+                        <form method="post" action="@Url.Action("Unfollow", "Follow")">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <button type="submit" class="btn btn-danger">Unfollow</button>
+                        </form>
+                    }
+                    else
+                    {
+                        @* Otherwise, show Follow button *@
+                        <form method="post" action="@Url.Action("Follow", "Follow")">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <button type="submit" class="btn btn-success">Follow</button>
+                        </form>
+                    }
+                </div>
+            }
+        </div>
+       
+    </div>
+
+    
+}
+else
+{
+    <div class="container">
+        <p class="text-center">No users found matching the search criteria.</p>
+    </div>
+}
+
+
+
+<!-- Button to Toggle Followed Users List -->
+
+
+

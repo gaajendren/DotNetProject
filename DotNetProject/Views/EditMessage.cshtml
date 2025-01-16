@@ -1,0 +1,34 @@
+﻿@model DotNetProject.Models.Message
+
+@{
+    ViewData["Title"] = "Edit Message";
+}
+
+<h2 class="text-center my-4">Edit Message</h2>
+
+<div class="container">
+    <form method="post" action="@Url.Action("EditMessage", "Message")">
+        <input type="hidden" name="Id" value="@Model.Id" />
+
+        <div class="form-group">
+            <label for="Content">Message Content:</label>
+            <textarea class="form-control" id="Content" name="Content" rows="4" required>@Model.Content</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <strong>There were some errors with your submission:</strong>
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}

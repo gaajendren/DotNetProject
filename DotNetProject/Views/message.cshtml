@@ -1,0 +1,46 @@
+﻿@model DotNetProject.Models.MessageViewModel
+
+@{
+    ViewData["Title"] = "Send Message";
+}
+
+<h2 class="text-center my-4">Send Message</h2>
+
+<form method="post" action="@Url.Action("SendMessage", "Message")">
+    <!-- Select Followed User -->
+    <div class="container">
+        <div class="form-group">
+            <label for="FollowedUserId">Select a User to Message:</label>
+            <select class="form-control" id="FollowedUserId" name="FollowedUserId" required>
+                <option value="">Select a followed user</option>
+                @foreach (var user in Model.FollowedUsers)
+                {
+                    <option value="@user.Id">@user.Name</option>
+                }
+            </select>
+        </div>
+
+        <!-- Message Field -->
+        <div class="form-group">
+            <label for="Message">Message:</label>
+            <textarea class="form-control" id="Message" name="Message" rows="4" required></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary mt-3">Send Message</button>
+    </div>
+</form>
+
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <strong>There were some errors with your submission:</strong>
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}

@@ -1,0 +1,28 @@
+﻿@model DotNetProject.Models.Post
+
+@{
+    ViewData["Title"] = "Edit Post";
+}
+
+<h2>Edit Post</h2>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="Caption"></label>
+        <input type="text" class="form-control" asp-for="Caption" />
+    </div>
+
+    <div class="form-group">
+        <label for="currentImage">Current Image</label><br />
+        <img src="@Model.ImagePath" alt="Post Image" class="img-thumbnail" style="max-width: 200px;" />
+    </div>
+
+    <div class="form-group">
+        <label for="newImage">Upload New Image</label>
+        <input type="file" class="form-control" id="newImage" name="newImage" />
+        <small class="form-text text-muted">Leave this empty if you don't want to change the image.</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+</form>
